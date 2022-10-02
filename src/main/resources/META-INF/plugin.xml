@@ -1,0 +1,25 @@
+<idea-plugin>
+    <id>org.strangeway.tsr</id>
+
+    <name>ToString Reader</name>
+    <vendor email="github@strangeway.org" url="https://www.strangeway.org">Yuriy Artamonov</vendor>
+
+    <description><![CDATA[
+    This is total absurd, but this plugin tries to simplify reading of toString() output for Java objects.
+    <br/>
+    Follow author in Twitter: <a href="https://twitter.com/Yuriy_Artamonov">&#64;Yuriy Artamonov</a>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="ToString" language="ToString" implementationClass="org.strangeway.tsr.TslFileType"
+                  extensions="toString"/>
+        <lang.parserDefinition language="ToString" implementationClass="org.strangeway.tsr.psi.TslParserDefinition"/>
+        <lang.braceMatcher language="ToString" implementationClass="org.strangeway.tsr.TslPairedBraceMatcher"/>
+        <lang.quoteHandler language="ToString" implementationClass="org.strangeway.tsr.TslQuoteHandler"/>
+        <lang.syntaxHighlighterFactory language="ToString" implementationClass="org.strangeway.tsr.TslSyntaxHighlighterFactory"/>
+
+        <annotator language="ToString" implementationClass="org.strangeway.tsr.TslAnnotator"/>
+    </extensions>
+</idea-plugin>

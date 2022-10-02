@@ -1,0 +1,99 @@
+{
+  parserClass="org.strangeway.tsr.parser.TslParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Tsl"
+  psiImplClassSuffix="Impl"
+  psiPackage="org.strangeway.tsr.psi"
+  psiImplPackage="org.strangeway.tsr.psi.impl"
+
+  elementTypeHolderClass="org.strangeway.tsr.psi.TslTokenTypes"
+  elementTypeClass="org.strangeway.tsr.psi.TslElementType"
+  tokenTypeClass="org.strangeway.tsr.psi.TslTokenType"
+  psiImplUtilClass="org.strangeway.tsr.psi.TslPsiUtils"
+  tokens = [
+    LBRACKET='['
+    RBRACKET=']'
+    LPARENTH='('
+    RPARENTH=')'
+    LBRACE='{'
+    RBRACE='}'
+    COMMA=','
+    COLON=':'
+    TRUE='true'
+    FALSE='false'
+    NULL='null'
+    STRUDEL='@'
+    ASSIGN='='
+  ]
+}
+
+root ::= value
+
+value ::= stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef | objectBrace | objectParenth | objectId | list
+
+objectRef ::= IDENTIFIER STRUDEL INTEGER_NUMBER {
+    pin = 2
+    extends = value
+}
+
+objectId ::= IDENTIFIER {
+    extends = value
+}
+
+objectParenth ::= IDENTIFIER LPARENTH propertiesListParenth RPARENTH {
+    pin = 2
+    extends = value
+}
+
+propertiesListParenth ::= keyValueParenth*
+
+keyValueParenth ::= key ASSIGN value (COMMA|&RPARENTH) {
+    pin = 2
+    recoverWhile = notRParenthOrNextValue
+}
+
+objectBrace ::= IDENTIFIER LBRACE propertiesListBrace RBRACE {
+    pin = 2
+    extends = value
+}
+
+propertiesListBrace ::= keyValueBrace*
+
+keyValueBrace ::= key ASSIGN value (COMMA|&RBRACE) {
+    pin = 2
+    recoverWhile = notRBraceOrNextValue
+}
+
+key ::= IDENTIFIER
+
+list ::= LBRACKET listItem* RBRACKET {
+    pin = 1
+    extends = value
+}
+
+private listItem ::= value (COMMA|&RBRACKET) {
+    pin = 1
+    recoverWhile = notBracketOrNextValue
+}
+
+booleanLiteral ::= TRUE | FALSE {
+    extends = value
+}
+
+numberLiteral ::= DOUBLE_NUMBER | INTEGER_NUMBER {
+    extends = value
+}
+
+stringLiteral ::= DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING {
+    extends = value
+}
+
+nullLiteral ::= NULL {
+    extends = value
+}
+
+private notBracketOrNextValue ::= !(RBRACKET|value)
+private notRParenthOrNextValue ::= !(RPARENTH|value)
+private notRBraceOrNextValue ::= !(RBRACE|value)
