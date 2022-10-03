@@ -89,6 +89,12 @@ final class TslBlock implements ASTBlock {
       wrap = Wrap.createWrap(CommonCodeStyleSettings.WRAP_ALWAYS, true);
     }
 
+    if (child.getElementType() == TslTokenTypes.RBRACE
+        || child.getElementType() == TslTokenTypes.RPARENTH
+        || child.getElementType() == TslTokenTypes.RBRACKET) {
+      wrap = Wrap.createWrap(CommonCodeStyleSettings.WRAP_ALWAYS, true);
+    }
+
     return new TslBlock(child, this, null, indent, wrap, spacingBuilder);
   }
 
