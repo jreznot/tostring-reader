@@ -31,6 +31,13 @@ tasks {
     patchPluginXml {
         sinceBuild.set("221")
         untilBuild.set("231.*")
+
+        changeNotes.set("""
+          <ul>
+            <li>Parsing and highlighting of toString() format</li>
+            <li>Auto formatting</li>
+          </ul>
+        """.trimIndent())
     }
 
     signPlugin {
