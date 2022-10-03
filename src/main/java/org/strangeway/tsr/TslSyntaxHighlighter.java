@@ -17,8 +17,8 @@ public final class TslSyntaxHighlighter extends SyntaxHighlighterBase {
   public static final TextAttributesKey TSL_KEYWORD =
       createTextAttributesKey("TSL.KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
 
-  public static final TextAttributesKey TSL_IDENTIFIER =
-      createTextAttributesKey("TSL.IDENTIFIER", DefaultLanguageHighlighterColors.CLASS_NAME);
+  public static final TextAttributesKey TSL_CLASSNAME =
+      createTextAttributesKey("TSL.CLASSNAME", DefaultLanguageHighlighterColors.CLASS_NAME);
 
   public static final TextAttributesKey TSL_NUMBER =
       createTextAttributesKey("TSL.NUMBER", DefaultLanguageHighlighterColors.NUMBER);
@@ -44,12 +44,15 @@ public final class TslSyntaxHighlighter extends SyntaxHighlighterBase {
   public static final TextAttributesKey TSL_CONSTANT =
       createTextAttributesKey("TSL.CONSTANT", DefaultLanguageHighlighterColors.CONSTANT);
 
+  public static final TextAttributesKey TSL_HASHCODE =
+      createTextAttributesKey("TSL.HASHCODE", DefaultLanguageHighlighterColors.METADATA);
+
   private static final Map<IElementType, TextAttributesKey> ourMap;
 
   static {
     ourMap = new HashMap<>();
 
-    fillMap(ourMap, TSL_KEYWORD, TslTokenTypes.NULL, TslTokenTypes.STRUDEL);
+    fillMap(ourMap, TSL_KEYWORD, TslTokenTypes.NULL);
     fillMap(ourMap, TSL_BOOLEAN, TslTokenTypes.TRUE, TslTokenTypes.FALSE);
     fillMap(ourMap, TSL_NUMBER, TslTokenTypes.INTEGER_NUMBER, TslTokenTypes.DOUBLE_NUMBER);
     fillMap(ourMap, TSL_STRING, TslTokenTypes.DOUBLE_QUOTED_STRING, TslTokenTypes.SINGLE_QUOTED_STRING);
@@ -57,6 +60,7 @@ public final class TslSyntaxHighlighter extends SyntaxHighlighterBase {
     fillMap(ourMap, TSL_BRACKETS, TslTokenTypes.LBRACKET, TslTokenTypes.RBRACKET);
     fillMap(ourMap, TSL_PARENTHESES, TslTokenTypes.LPARENTH, TslTokenTypes.RPARENTH);
     fillMap(ourMap, TSL_COMMA, TslTokenTypes.COMMA);
+    fillMap(ourMap, TSL_HASHCODE, TslTokenTypes.STRUDEL_HEX);
   }
 
   @Override

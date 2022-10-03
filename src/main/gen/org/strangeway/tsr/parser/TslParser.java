@@ -222,15 +222,15 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // nullLiteral | booleanLiteral | objectId | objectRef | numberLiteral
+  // nullLiteral | booleanLiteral | objectRef | objectId | numberLiteral
   public static boolean mapKey(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "mapKey")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, MAP_KEY, "<map key>");
     r = nullLiteral(b, l + 1);
     if (!r) r = booleanLiteral(b, l + 1);
-    if (!r) r = objectId(b, l + 1);
     if (!r) r = objectRef(b, l + 1);
+    if (!r) r = objectId(b, l + 1);
     if (!r) r = numberLiteral(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -323,13 +323,14 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER LBRACE propertiesList RBRACE
+  // objectName LBRACE propertiesList RBRACE
   public static boolean objectBrace(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "objectBrace")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, OBJECT_BRACE, null);
-    r = consumeTokens(b, 2, IDENTIFIER, LBRACE);
+    r = objectName(b, l + 1);
+    r = r && consumeToken(b, LBRACE);
     p = r; // pin = 2
     r = r && report_error_(b, propertiesList(b, l + 1));
     r = p && consumeToken(b, RBRACE) && r;
@@ -350,13 +351,26 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER LPARENTH propertiesList RPARENTH
+  // IDENTIFIER
+  public static boolean objectName(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "objectName")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, OBJECT_NAME, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // objectName LPARENTH propertiesList RPARENTH
   public static boolean objectParenth(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "objectParenth")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, OBJECT_PARENTH, null);
-    r = consumeTokens(b, 2, IDENTIFIER, LPARENTH);
+    r = objectName(b, l + 1);
+    r = r && consumeToken(b, LPARENTH);
     p = r; // pin = 2
     r = r && report_error_(b, propertiesList(b, l + 1));
     r = p && consumeToken(b, RPARENTH) && r;
@@ -365,16 +379,15 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER STRUDEL INTEGER_NUMBER
+  // IDENTIFIER STRUDEL_HEX
   public static boolean objectRef(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "objectRef")) return false;
     if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, OBJECT_REF, null);
-    r = consumeTokens(b, 2, IDENTIFIER, STRUDEL, INTEGER_NUMBER);
-    p = r; // pin = 2
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 2, IDENTIFIER, STRUDEL_HEX);
+    exit_section_(b, m, OBJECT_REF, r);
+    return r;
   }
 
   /* ********************************************************** */

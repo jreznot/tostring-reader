@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface TslObjectParenth extends TslValue {
-
-  @NotNull
-  TslObjectName getObjectName();
-
-  @Nullable
-  TslPropertiesList getPropertiesList();
+public interface TslObjectName extends PsiElement {
 
 }

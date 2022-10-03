@@ -8,35 +8,23 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.tsr.psi.TslTokenTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.tsr.psi.*;
 
-public class TslObjectParenthImpl extends TslValueImpl implements TslObjectParenth {
+public class TslObjectNameImpl extends ASTWrapperPsiElement implements TslObjectName {
 
-  public TslObjectParenthImpl(@NotNull ASTNode node) {
+  public TslObjectNameImpl(@NotNull ASTNode node) {
     super(node);
   }
 
-  @Override
   public void accept(@NotNull TslVisitor visitor) {
-    visitor.visitObjectParenth(this);
+    visitor.visitObjectName(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof TslVisitor) accept((TslVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public TslObjectName getObjectName() {
-    return findNotNullChildByClass(TslObjectName.class);
-  }
-
-  @Override
-  @Nullable
-  public TslPropertiesList getPropertiesList() {
-    return findChildByClass(TslPropertiesList.class);
   }
 
 }

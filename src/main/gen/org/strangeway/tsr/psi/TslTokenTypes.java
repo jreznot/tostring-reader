@@ -18,6 +18,7 @@ public interface TslTokenTypes {
   IElementType NUMBER_LITERAL = new TslElementType("NUMBER_LITERAL");
   IElementType OBJECT_BRACE = new TslElementType("OBJECT_BRACE");
   IElementType OBJECT_ID = new TslElementType("OBJECT_ID");
+  IElementType OBJECT_NAME = new TslElementType("OBJECT_NAME");
   IElementType OBJECT_PARENTH = new TslElementType("OBJECT_PARENTH");
   IElementType OBJECT_REF = new TslElementType("OBJECT_REF");
   IElementType PROPERTIES_LIST = new TslElementType("PROPERTIES_LIST");
@@ -41,7 +42,7 @@ public interface TslTokenTypes {
   IElementType RBRACKET = new TslTokenType("]");
   IElementType RPARENTH = new TslTokenType(")");
   IElementType SINGLE_QUOTED_STRING = new TslTokenType("SINGLE_QUOTED_STRING");
-  IElementType STRUDEL = new TslTokenType("@");
+  IElementType STRUDEL_HEX = new TslTokenType("STRUDEL_HEX");
   IElementType TRUE = new TslTokenType("true");
 
   class Factory {
@@ -76,6 +77,9 @@ public interface TslTokenTypes {
       }
       else if (type == OBJECT_ID) {
         return new TslObjectIdImpl(node);
+      }
+      else if (type == OBJECT_NAME) {
+        return new TslObjectNameImpl(node);
       }
       else if (type == OBJECT_PARENTH) {
         return new TslObjectParenthImpl(node);

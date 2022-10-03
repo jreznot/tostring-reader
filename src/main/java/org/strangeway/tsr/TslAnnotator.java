@@ -9,6 +9,7 @@ import org.strangeway.tsr.psi.TslMapKey;
 import org.strangeway.tsr.psi.TslObjectId;
 import org.strangeway.tsr.psi.TslPropertyKey;
 
+import javax.management.ObjectName;
 import java.util.regex.Pattern;
 
 public final class TslAnnotator implements Annotator {
@@ -31,6 +32,10 @@ public final class TslAnnotator implements Annotator {
             .textAttributes(TslSyntaxHighlighter.TSL_FIELD_NAME)
             .create();
       }
+    } else if (element instanceof ObjectName) {
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .textAttributes(TslSyntaxHighlighter.TSL_CLASSNAME)
+          .create();
     }
   }
 }

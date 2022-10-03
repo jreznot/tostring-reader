@@ -7,6 +7,9 @@ import com.intellij.psi.PsiElement;
 
 public interface TslObjectBrace extends TslValue {
 
+  @NotNull
+  TslObjectName getObjectName();
+
   @Nullable
   TslPropertiesList getPropertiesList();
 

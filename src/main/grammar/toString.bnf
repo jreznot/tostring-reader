@@ -24,7 +24,6 @@
     TRUE='true'
     FALSE='false'
     NULL='null'
-    STRUDEL='@'
     ASSIGN='='
   ]
 }
@@ -33,7 +32,7 @@ root ::= value
 
 value ::= stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef | objectBrace | objectParenth | objectId | list | map
 
-objectRef ::= IDENTIFIER STRUDEL INTEGER_NUMBER {
+objectRef ::= IDENTIFIER STRUDEL_HEX {
     pin = 2
     extends = value
 }
@@ -49,15 +48,17 @@ keyValue ::= propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE)) {
     recoverWhile = notRBraceParenthOrNextValue
 }
 
-objectParenth ::= IDENTIFIER LPARENTH propertiesList RPARENTH {
+objectParenth ::= objectName LPARENTH propertiesList RPARENTH {
     pin = 2
     extends = value
 }
 
-objectBrace ::= IDENTIFIER LBRACE propertiesList RBRACE {
+objectBrace ::= objectName LBRACE propertiesList RBRACE {
     pin = 2
     extends = value
 }
+
+objectName ::= IDENTIFIER
 
 propertyKey ::= IDENTIFIER
 
@@ -80,7 +81,7 @@ mapItem ::= mapKey ASSIGN value (COMMA|&RBRACE) {
     recoverWhile = notRBraceOrNextValue
 }
 
-mapKey ::= nullLiteral | booleanLiteral | objectId | objectRef | numberLiteral
+mapKey ::= nullLiteral | booleanLiteral | objectRef | objectId | numberLiteral
 
 booleanLiteral ::= TRUE | FALSE {
     extends = value

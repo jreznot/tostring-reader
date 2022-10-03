@@ -46,5 +46,10 @@ public final class Product {
     Product p = new Product(ProductType.USED, "Some", 10.0, 100);
     System.out.println(List.of(p));
     System.out.println(Map.of("product", p));
+    System.out.println(Map.of(new UserRef(), p));
   }
+}
+
+class UserRef {
+
 }

@@ -37,6 +37,8 @@ EXPONENT_PART=[Ee]["+""-"]?({DIGIT})*
 
 WHITE_SPACE=\s+
 
+STRUDEL_HEX=[@][a-f0-9]+
+
 %%
 
 <YYINITIAL> {
@@ -51,9 +53,9 @@ WHITE_SPACE=\s+
     ")"                                  { return RPARENTH; }
     "{"                                  { return LBRACE; }
     "}"                                  { return RBRACE; }
-    "@"                                  { return STRUDEL; }
     "="                                  { return ASSIGN; }
 
+    {STRUDEL_HEX}                        { return STRUDEL_HEX; }
     {IDENTIFIER}                         { return IDENTIFIER; }
     {INTEGER_LITERAL}                    { return INTEGER_NUMBER; }
     {DOUBLE_LITERAL}                     { return DOUBLE_NUMBER; }
