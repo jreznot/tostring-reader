@@ -36,6 +36,7 @@ tasks {
           <ul>
             <li>Parsing and highlighting of toString() format</li>
             <li>Auto formatting</li>
+            <li>Code folding</li>
           </ul>
         """.trimIndent())
     }
