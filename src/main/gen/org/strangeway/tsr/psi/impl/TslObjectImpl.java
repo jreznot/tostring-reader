@@ -10,21 +10,33 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static org.strangeway.tsr.psi.TslTokenTypes.*;
 import org.strangeway.tsr.psi.*;
 
-public class TslObjectBraceImpl extends TslObjectImpl implements TslObjectBrace {
+public class TslObjectImpl extends TslValueImpl implements TslObject {
 
-  public TslObjectBraceImpl(@NotNull ASTNode node) {
+  public TslObjectImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   @Override
   public void accept(@NotNull TslVisitor visitor) {
-    visitor.visitObjectBrace(this);
+    visitor.visitObject(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof TslVisitor) accept((TslVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public TslObjectName getObjectName() {
+    return findNotNullChildByClass(TslObjectName.class);
+  }
+
+  @Override
+  @Nullable
+  public TslPropertiesList getPropertiesList() {
+    return findChildByClass(TslPropertiesList.class);
   }
 
 }

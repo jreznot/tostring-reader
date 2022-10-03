@@ -5,6 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface TslObjectBrace extends TslObject {
+public interface TslObject extends TslValue {
+
+  @NotNull
+  TslObjectName getObjectName();
+
+  @Nullable
+  TslPropertiesList getPropertiesList();
 
 }

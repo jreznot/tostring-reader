@@ -48,14 +48,18 @@ keyValue ::= propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE)) {
     recoverWhile = notRBraceParenthOrNextValue
 }
 
+fake object ::= objectName propertiesList? {
+    extends = value
+}
+
 objectParenth ::= objectName LPARENTH propertiesList RPARENTH {
     pin = 2
-    extends = value
+    extends = object
 }
 
 objectBrace ::= objectName LBRACE propertiesList RBRACE {
     pin = 2
-    extends = value
+    extends = object
 }
 
 objectName ::= IDENTIFIER

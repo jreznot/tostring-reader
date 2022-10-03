@@ -39,8 +39,12 @@ public class TslVisitor extends PsiElementVisitor {
     visitValue(o);
   }
 
-  public void visitObjectBrace(@NotNull TslObjectBrace o) {
+  public void visitObject(@NotNull TslObject o) {
     visitValue(o);
+  }
+
+  public void visitObjectBrace(@NotNull TslObjectBrace o) {
+    visitObject(o);
   }
 
   public void visitObjectId(@NotNull TslObjectId o) {
@@ -52,7 +56,7 @@ public class TslVisitor extends PsiElementVisitor {
   }
 
   public void visitObjectParenth(@NotNull TslObjectParenth o) {
-    visitValue(o);
+    visitObject(o);
   }
 
   public void visitObjectRef(@NotNull TslObjectRef o) {
