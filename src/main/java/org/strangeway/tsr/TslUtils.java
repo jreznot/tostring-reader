@@ -48,6 +48,7 @@ public final class TslUtils {
   public static boolean isPrimitive(@NotNull TslValue value) {
     return value instanceof TslNullLiteral
         || value instanceof TslStringLiteral
+        || value instanceof TslNumberLiteral
         || value instanceof TslBooleanLiteral
         || value instanceof TslObjectRef
         || value instanceof TslObjectId;

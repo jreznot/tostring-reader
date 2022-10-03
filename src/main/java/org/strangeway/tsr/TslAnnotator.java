@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.strangeway.tsr.psi.TslMapKey;
 import org.strangeway.tsr.psi.TslObjectId;
 import org.strangeway.tsr.psi.TslPropertyKey;
+import org.strangeway.tsr.psi.TslPropertyKeyValue;
 
 import javax.management.ObjectName;
 import java.util.regex.Pattern;
@@ -27,7 +28,8 @@ final class TslAnnotator implements Annotator {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
             .textAttributes(TslSyntaxHighlighter.TSL_CONSTANT)
             .create();
-      } else if (element.getParent() instanceof TslMapKey) {
+      } else if (element.getParent() instanceof TslMapKey
+          || element.getParent() instanceof TslPropertyKeyValue) {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
             .textAttributes(TslSyntaxHighlighter.TSL_FIELD_NAME)
             .create();
