@@ -40,6 +40,8 @@ public final class TslUtils {
 
       TslPropertyKeyValue property = properties.get(0);
       return property.getValue() == null || isPrimitive(property.getValue());
+    } else if (psiElement instanceof TslList) {
+      return ((TslList) psiElement).getValueList().isEmpty();
     }
 
     return false;
