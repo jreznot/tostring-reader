@@ -11,14 +11,14 @@ import static org.strangeway.tsr.psi.TslTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.tsr.psi.*;
 
-public class TslKeyValueImpl extends ASTWrapperPsiElement implements TslKeyValue {
+public class TslMapKeyImpl extends ASTWrapperPsiElement implements TslMapKey {
 
-  public TslKeyValueImpl(@NotNull ASTNode node) {
+  public TslMapKeyImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull TslVisitor visitor) {
-    visitor.visitKeyValue(this);
+    visitor.visitMapKey(this);
   }
 
   @Override
@@ -29,14 +29,8 @@ public class TslKeyValueImpl extends ASTWrapperPsiElement implements TslKeyValue
 
   @Override
   @NotNull
-  public TslPropertyKey getPropertyKey() {
-    return findNotNullChildByClass(TslPropertyKey.class);
-  }
-
-  @Override
-  @Nullable
   public TslValue getValue() {
-    return findChildByClass(TslValue.class);
+    return findNotNullChildByClass(TslValue.class);
   }
 
 }

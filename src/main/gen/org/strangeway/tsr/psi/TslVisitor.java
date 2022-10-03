@@ -11,16 +11,24 @@ public class TslVisitor extends PsiElementVisitor {
     visitValue(o);
   }
 
-  public void visitKey(@NotNull TslKey o) {
-    visitPsiElement(o);
-  }
-
   public void visitKeyValue(@NotNull TslKeyValue o) {
     visitPsiElement(o);
   }
 
   public void visitList(@NotNull TslList o) {
     visitValue(o);
+  }
+
+  public void visitMap(@NotNull TslMap o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMapItem(@NotNull TslMapItem o) {
+    visitPsiElement(o);
+  }
+
+  public void visitMapKey(@NotNull TslMapKey o) {
+    visitPsiElement(o);
   }
 
   public void visitNullLiteral(@NotNull TslNullLiteral o) {
@@ -48,6 +56,10 @@ public class TslVisitor extends PsiElementVisitor {
   }
 
   public void visitPropertiesList(@NotNull TslPropertiesList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitPropertyKey(@NotNull TslPropertyKey o) {
     visitPsiElement(o);
   }
 

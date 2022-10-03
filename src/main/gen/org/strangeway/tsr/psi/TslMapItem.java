@@ -5,10 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface TslKeyValue extends PsiElement {
+public interface TslMapItem extends PsiElement {
 
   @NotNull
-  TslPropertyKey getPropertyKey();
+  TslMapKey getMapKey();
 
   @Nullable
   TslValue getValue();

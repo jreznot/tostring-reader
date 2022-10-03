@@ -1,6 +1,7 @@
 package org.strangeway.tsr.pojos;
 
 import java.util.List;
+import java.util.Map;
 
 public final class Product {
   private final ProductType productType;
@@ -44,5 +45,6 @@ public final class Product {
   public static void main(String[] args) {
     Product p = new Product(ProductType.USED, "Some", 10.0, 100);
     System.out.println(List.of(p));
+    System.out.println(Map.of("product", p));
   }
 }

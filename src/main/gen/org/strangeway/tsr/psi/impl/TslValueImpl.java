@@ -11,7 +11,7 @@ import static org.strangeway.tsr.psi.TslTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.tsr.psi.*;
 
-public abstract class TslValueImpl extends ASTWrapperPsiElement implements TslValue {
+public class TslValueImpl extends ASTWrapperPsiElement implements TslValue {
 
   public TslValueImpl(@NotNull ASTNode node) {
     super(node);
@@ -25,6 +25,12 @@ public abstract class TslValueImpl extends ASTWrapperPsiElement implements TslVa
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof TslVisitor) accept((TslVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public TslMap getMap() {
+    return findChildByClass(TslMap.class);
   }
 
 }

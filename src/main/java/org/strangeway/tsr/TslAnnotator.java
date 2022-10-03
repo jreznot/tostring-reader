@@ -5,8 +5,9 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
-import org.strangeway.tsr.psi.TslKey;
+import org.strangeway.tsr.psi.TslMapKey;
 import org.strangeway.tsr.psi.TslObjectId;
+import org.strangeway.tsr.psi.TslPropertyKey;
 
 import java.util.regex.Pattern;
 
@@ -16,7 +17,7 @@ public final class TslAnnotator implements Annotator {
 
   @Override
   public void annotate(@NotNull PsiElement element, @NotNull AnnotationHolder holder) {
-    if (element instanceof TslKey) {
+    if (element instanceof TslPropertyKey) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .textAttributes(TslSyntaxHighlighter.TSL_FIELD_NAME)
           .create();
@@ -24,6 +25,10 @@ public final class TslAnnotator implements Annotator {
       if (ALL_UPPERCASE.matcher(element.getText()).matches()) {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
             .textAttributes(TslSyntaxHighlighter.TSL_CONSTANT)
+            .create();
+      } else if (element.getParent() instanceof TslMapKey) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+            .textAttributes(TslSyntaxHighlighter.TSL_FIELD_NAME)
             .create();
       }
     }

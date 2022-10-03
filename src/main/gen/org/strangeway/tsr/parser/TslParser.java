@@ -55,24 +55,12 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER
-  public static boolean key(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "key")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
-    exit_section_(b, m, KEY, r);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // key ASSIGN value (COMMA|&(RPARENTH|RBRACE))
+  // propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE))
   public static boolean keyValue(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "keyValue")) return false;
     boolean r, p;
     Marker m = enter_section_(b, l, _NONE_, KEY_VALUE, "<key value>");
-    r = key(b, l + 1);
+    r = propertyKey(b, l + 1);
     r = r && consumeToken(b, ASSIGN);
     p = r; // pin = 2
     r = r && report_error_(b, value(b, l + 1));
@@ -146,7 +134,7 @@ public class TslParser implements PsiParser, LightPsiParser {
     r = value(b, l + 1);
     p = r; // pin = 1
     r = r && listItem_1(b, l + 1);
-    exit_section_(b, l, m, r, p, TslParser::notBracketOrNextValue);
+    exit_section_(b, l, m, r, p, TslParser::notRBracketOrNextValue);
     return r || p;
   }
 
@@ -172,21 +160,98 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !(RBRACKET|value)
-  static boolean notBracketOrNextValue(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "notBracketOrNextValue")) return false;
+  // LBRACE mapItem* RBRACE
+  public static boolean map(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "map")) return false;
+    if (!nextTokenIs(b, LBRACE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, MAP, null);
+    r = consumeToken(b, LBRACE);
+    p = r; // pin = 1
+    r = r && report_error_(b, map_1(b, l + 1));
+    r = p && consumeToken(b, RBRACE) && r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
+  }
+
+  // mapItem*
+  private static boolean map_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "map_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!mapItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "map_1", c)) break;
+    }
+    return true;
+  }
+
+  /* ********************************************************** */
+  // mapKey ASSIGN value (COMMA|&RBRACE)
+  public static boolean mapItem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "mapItem")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, MAP_ITEM, "<map item>");
+    r = mapKey(b, l + 1);
+    r = r && consumeToken(b, ASSIGN);
+    p = r; // pin = 2
+    r = r && report_error_(b, value(b, l + 1));
+    r = p && mapItem_3(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, TslParser::notRBraceOrNextValue);
+    return r || p;
+  }
+
+  // COMMA|&RBRACE
+  private static boolean mapItem_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "mapItem_3")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !notBracketOrNextValue_0(b, l + 1);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    if (!r) r = mapItem_3_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // &RBRACE
+  private static boolean mapItem_3_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "mapItem_3_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _AND_);
+    r = consumeToken(b, RBRACE);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // RBRACKET|value
-  private static boolean notBracketOrNextValue_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "notBracketOrNextValue_0")) return false;
+  /* ********************************************************** */
+  // nullLiteral | booleanLiteral | objectId | objectRef | numberLiteral
+  public static boolean mapKey(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "mapKey")) return false;
     boolean r;
-    r = consumeToken(b, RBRACKET);
+    Marker m = enter_section_(b, l, _NONE_, MAP_KEY, "<map key>");
+    r = nullLiteral(b, l + 1);
+    if (!r) r = booleanLiteral(b, l + 1);
+    if (!r) r = objectId(b, l + 1);
+    if (!r) r = objectRef(b, l + 1);
+    if (!r) r = numberLiteral(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !(RBRACE|value)
+  static boolean notRBraceOrNextValue(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "notRBraceOrNextValue")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !notRBraceOrNextValue_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // RBRACE|value
+  private static boolean notRBraceOrNextValue_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "notRBraceOrNextValue_0")) return false;
+    boolean r;
+    r = consumeToken(b, RBRACE);
     if (!r) r = value(b, l + 1);
     return r;
   }
@@ -208,6 +273,26 @@ public class TslParser implements PsiParser, LightPsiParser {
     boolean r;
     r = consumeToken(b, RPARENTH);
     if (!r) r = consumeToken(b, RBRACE);
+    if (!r) r = value(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !(RBRACKET|value)
+  static boolean notRBracketOrNextValue(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "notRBracketOrNextValue")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !notRBracketOrNextValue_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // RBRACKET|value
+  private static boolean notRBracketOrNextValue_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "notRBracketOrNextValue_0")) return false;
+    boolean r;
+    r = consumeToken(b, RBRACKET);
     if (!r) r = value(b, l + 1);
     return r;
   }
@@ -307,6 +392,18 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean propertyKey(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "propertyKey")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, PROPERTY_KEY, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // value
   static boolean root(PsiBuilder b, int l) {
     return value(b, l + 1);
@@ -326,7 +423,7 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef | objectBrace | objectParenth | objectId | list
+  // stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef | objectBrace | objectParenth | objectId | list | map
   public static boolean value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "value")) return false;
     boolean r;
@@ -340,6 +437,7 @@ public class TslParser implements PsiParser, LightPsiParser {
     if (!r) r = objectParenth(b, l + 1);
     if (!r) r = objectId(b, l + 1);
     if (!r) r = list(b, l + 1);
+    if (!r) r = map(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

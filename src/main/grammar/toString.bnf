@@ -31,7 +31,7 @@
 
 root ::= value
 
-value ::= stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef | objectBrace | objectParenth | objectId | list
+value ::= stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef | objectBrace | objectParenth | objectId | list | map
 
 objectRef ::= IDENTIFIER STRUDEL INTEGER_NUMBER {
     pin = 2
@@ -44,7 +44,7 @@ objectId ::= IDENTIFIER {
 
 propertiesList ::= keyValue*
 
-keyValue ::= key ASSIGN value (COMMA|&(RPARENTH|RBRACE)) {
+keyValue ::= propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE)) {
     pin = 2
     recoverWhile = notRBraceParenthOrNextValue
 }
@@ -59,7 +59,7 @@ objectBrace ::= IDENTIFIER LBRACE propertiesList RBRACE {
     extends = value
 }
 
-key ::= IDENTIFIER
+propertyKey ::= IDENTIFIER
 
 list ::= LBRACKET listItem* RBRACKET {
     pin = 1
@@ -68,8 +68,19 @@ list ::= LBRACKET listItem* RBRACKET {
 
 private listItem ::= value (COMMA|&RBRACKET) {
     pin = 1
-    recoverWhile = notBracketOrNextValue
+    recoverWhile = notRBracketOrNextValue
 }
+
+map ::= LBRACE mapItem* RBRACE {
+    pin = 1
+}
+
+mapItem ::= mapKey ASSIGN value (COMMA|&RBRACE) {
+    pin = 2
+    recoverWhile = notRBraceOrNextValue
+}
+
+mapKey ::= nullLiteral | booleanLiteral | objectId | objectRef | numberLiteral
 
 booleanLiteral ::= TRUE | FALSE {
     extends = value
@@ -87,5 +98,6 @@ nullLiteral ::= NULL {
     extends = value
 }
 
-private notBracketOrNextValue ::= !(RBRACKET|value)
+private notRBracketOrNextValue ::= !(RBRACKET|value)
+private notRBraceOrNextValue ::= !(RBRACE|value)
 private notRBraceParenthOrNextValue ::= !(RPARENTH|RBRACE|value)
