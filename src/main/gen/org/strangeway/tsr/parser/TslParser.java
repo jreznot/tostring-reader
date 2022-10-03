@@ -347,15 +347,13 @@ public class TslParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // propertyKeyValue*
-  public static boolean propertiesList(PsiBuilder b, int l) {
+  static boolean propertiesList(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "propertiesList")) return false;
-    Marker m = enter_section_(b, l, _NONE_, PROPERTIES_LIST, "<properties list>");
     while (true) {
       int c = current_position_(b);
       if (!propertyKeyValue(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "propertiesList", c)) break;
     }
-    exit_section_(b, l, m, true, false, null);
     return true;
   }
 

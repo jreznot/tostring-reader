@@ -20,7 +20,6 @@ public interface TslTokenTypes {
   IElementType OBJECT_NAME = new TslElementType("OBJECT_NAME");
   IElementType OBJECT_PARENTH = new TslElementType("OBJECT_PARENTH");
   IElementType OBJECT_REF = new TslElementType("OBJECT_REF");
-  IElementType PROPERTIES_LIST = new TslElementType("PROPERTIES_LIST");
   IElementType PROPERTY_KEY = new TslElementType("PROPERTY_KEY");
   IElementType PROPERTY_KEY_VALUE = new TslElementType("PROPERTY_KEY_VALUE");
   IElementType STRING_LITERAL = new TslElementType("STRING_LITERAL");
@@ -83,9 +82,6 @@ public interface TslTokenTypes {
       }
       else if (type == OBJECT_REF) {
         return new TslObjectRefImpl(node);
-      }
-      else if (type == PROPERTIES_LIST) {
-        return new TslPropertiesListImpl(node);
       }
       else if (type == PROPERTY_KEY) {
         return new TslPropertyKeyImpl(node);

@@ -34,9 +34,9 @@ public class TslObjectImpl extends TslValueImpl implements TslObject {
   }
 
   @Override
-  @Nullable
-  public TslPropertiesList getPropertiesList() {
-    return findChildByClass(TslPropertiesList.class);
+  @NotNull
+  public List<TslPropertyKeyValue> getPropertyKeyValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, TslPropertyKeyValue.class);
   }
 
 }

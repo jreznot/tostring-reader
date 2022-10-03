@@ -10,7 +10,7 @@ public interface TslObject extends TslValue {
   @NotNull
   TslObjectName getObjectName();
 
-  @Nullable
-  TslPropertiesList getPropertiesList();
+  @NotNull
+  List<TslPropertyKeyValue> getPropertyKeyValueList();
 
 }

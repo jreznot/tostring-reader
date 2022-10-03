@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.intellij.psi.formatter.FormatterUtil.isWhitespaceOrEmpty;
+import static org.strangeway.tsr.TslUtils.isCompactPropertyBlock;
 
 final class TslBlock implements ASTBlock {
 
@@ -78,21 +79,23 @@ final class TslBlock implements ASTBlock {
           && !TslTokenSets.BLOCK_IDENTIFIERS.contains(child.getElementType())) {
         indent = Indent.getNormalIndent();
 
-        if (isTslBlock(node)) {
+        if (!isCompactPropertyBlock(psiElement)) {
           wrap = Wrap.createWrap(CommonCodeStyleSettings.WRAP_ALWAYS, true);
         }
       }
     }
 
-    if (child.getElementType() == TslTokenTypes.MAP_ITEM
-        || child.getElementType() == TslTokenTypes.PROPERTY_KEY_VALUE) {
-      wrap = Wrap.createWrap(CommonCodeStyleSettings.WRAP_ALWAYS, true);
-    }
+    if (!isCompactPropertyBlock(psiElement)) {
+      if (child.getElementType() == TslTokenTypes.MAP_ITEM
+          || child.getElementType() == TslTokenTypes.PROPERTY_KEY_VALUE) {
+        wrap = Wrap.createWrap(CommonCodeStyleSettings.WRAP_ALWAYS, true);
+      }
 
-    if (child.getElementType() == TslTokenTypes.RBRACE
-        || child.getElementType() == TslTokenTypes.RPARENTH
-        || child.getElementType() == TslTokenTypes.RBRACKET) {
-      wrap = Wrap.createWrap(CommonCodeStyleSettings.WRAP_ALWAYS, true);
+      if (child.getElementType() == TslTokenTypes.RBRACE
+          || child.getElementType() == TslTokenTypes.RPARENTH
+          || child.getElementType() == TslTokenTypes.RBRACKET) {
+        wrap = Wrap.createWrap(CommonCodeStyleSettings.WRAP_ALWAYS, true);
+      }
     }
 
     return new TslBlock(child, this, null, indent, wrap, spacingBuilder);

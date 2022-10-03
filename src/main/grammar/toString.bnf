@@ -41,7 +41,7 @@ objectId ::= IDENTIFIER {
     extends = value
 }
 
-propertiesList ::= propertyKeyValue*
+private propertiesList ::= propertyKeyValue*
 
 propertyKeyValue ::= propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE)) {
     pin = 2
