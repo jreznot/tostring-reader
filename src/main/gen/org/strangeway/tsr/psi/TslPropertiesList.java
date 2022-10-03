@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface TslPropertiesListParenth extends PsiElement {
+public interface TslPropertiesList extends PsiElement {
 
   @NotNull
-  List<TslKeyValueParenth> getKeyValueParenthList();
+  List<TslKeyValue> getKeyValueList();
 
 }

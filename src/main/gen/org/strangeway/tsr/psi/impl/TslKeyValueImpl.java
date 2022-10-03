@@ -11,14 +11,14 @@ import static org.strangeway.tsr.psi.TslTokenTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import org.strangeway.tsr.psi.*;
 
-public class TslKeyValueBraceImpl extends ASTWrapperPsiElement implements TslKeyValueBrace {
+public class TslKeyValueImpl extends ASTWrapperPsiElement implements TslKeyValue {
 
-  public TslKeyValueBraceImpl(@NotNull ASTNode node) {
+  public TslKeyValueImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull TslVisitor visitor) {
-    visitor.visitKeyValueBrace(this);
+    visitor.visitKeyValue(this);
   }
 
   @Override

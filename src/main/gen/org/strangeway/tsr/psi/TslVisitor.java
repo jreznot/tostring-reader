@@ -15,11 +15,7 @@ public class TslVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitKeyValueBrace(@NotNull TslKeyValueBrace o) {
-    visitPsiElement(o);
-  }
-
-  public void visitKeyValueParenth(@NotNull TslKeyValueParenth o) {
+  public void visitKeyValue(@NotNull TslKeyValue o) {
     visitPsiElement(o);
   }
 
@@ -51,11 +47,7 @@ public class TslVisitor extends PsiElementVisitor {
     visitValue(o);
   }
 
-  public void visitPropertiesListBrace(@NotNull TslPropertiesListBrace o) {
-    visitPsiElement(o);
-  }
-
-  public void visitPropertiesListParenth(@NotNull TslPropertiesListParenth o) {
+  public void visitPropertiesList(@NotNull TslPropertiesList o) {
     visitPsiElement(o);
   }
 

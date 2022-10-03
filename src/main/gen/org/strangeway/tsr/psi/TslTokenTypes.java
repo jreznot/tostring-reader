@@ -10,8 +10,7 @@ public interface TslTokenTypes {
 
   IElementType BOOLEAN_LITERAL = new TslElementType("BOOLEAN_LITERAL");
   IElementType KEY = new TslElementType("KEY");
-  IElementType KEY_VALUE_BRACE = new TslElementType("KEY_VALUE_BRACE");
-  IElementType KEY_VALUE_PARENTH = new TslElementType("KEY_VALUE_PARENTH");
+  IElementType KEY_VALUE = new TslElementType("KEY_VALUE");
   IElementType LIST = new TslElementType("LIST");
   IElementType NULL_LITERAL = new TslElementType("NULL_LITERAL");
   IElementType NUMBER_LITERAL = new TslElementType("NUMBER_LITERAL");
@@ -19,8 +18,7 @@ public interface TslTokenTypes {
   IElementType OBJECT_ID = new TslElementType("OBJECT_ID");
   IElementType OBJECT_PARENTH = new TslElementType("OBJECT_PARENTH");
   IElementType OBJECT_REF = new TslElementType("OBJECT_REF");
-  IElementType PROPERTIES_LIST_BRACE = new TslElementType("PROPERTIES_LIST_BRACE");
-  IElementType PROPERTIES_LIST_PARENTH = new TslElementType("PROPERTIES_LIST_PARENTH");
+  IElementType PROPERTIES_LIST = new TslElementType("PROPERTIES_LIST");
   IElementType STRING_LITERAL = new TslElementType("STRING_LITERAL");
   IElementType VALUE = new TslElementType("VALUE");
 
@@ -52,11 +50,8 @@ public interface TslTokenTypes {
       else if (type == KEY) {
         return new TslKeyImpl(node);
       }
-      else if (type == KEY_VALUE_BRACE) {
-        return new TslKeyValueBraceImpl(node);
-      }
-      else if (type == KEY_VALUE_PARENTH) {
-        return new TslKeyValueParenthImpl(node);
+      else if (type == KEY_VALUE) {
+        return new TslKeyValueImpl(node);
       }
       else if (type == LIST) {
         return new TslListImpl(node);
@@ -79,11 +74,8 @@ public interface TslTokenTypes {
       else if (type == OBJECT_REF) {
         return new TslObjectRefImpl(node);
       }
-      else if (type == PROPERTIES_LIST_BRACE) {
-        return new TslPropertiesListBraceImpl(node);
-      }
-      else if (type == PROPERTIES_LIST_PARENTH) {
-        return new TslPropertiesListParenthImpl(node);
+      else if (type == PROPERTIES_LIST) {
+        return new TslPropertiesListImpl(node);
       }
       else if (type == STRING_LITERAL) {
         return new TslStringLiteralImpl(node);

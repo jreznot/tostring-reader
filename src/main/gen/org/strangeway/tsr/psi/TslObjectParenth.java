@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface TslObjectParenth extends TslValue {
 
   @Nullable
-  TslPropertiesListParenth getPropertiesListParenth();
+  TslPropertiesList getPropertiesList();
 
 }

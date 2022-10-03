@@ -29,8 +29,8 @@ public class TslObjectParenthImpl extends TslValueImpl implements TslObjectParen
 
   @Override
   @Nullable
-  public TslPropertiesListParenth getPropertiesListParenth() {
-    return findChildByClass(TslPropertiesListParenth.class);
+  public TslPropertiesList getPropertiesList() {
+    return findChildByClass(TslPropertiesList.class);
   }
 
 }

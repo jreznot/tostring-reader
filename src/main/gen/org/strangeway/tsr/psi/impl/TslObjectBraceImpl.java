@@ -29,8 +29,8 @@ public class TslObjectBraceImpl extends TslValueImpl implements TslObjectBrace {
 
   @Override
   @Nullable
-  public TslPropertiesListBrace getPropertiesListBrace() {
-    return findChildByClass(TslPropertiesListBrace.class);
+  public TslPropertiesList getPropertiesList() {
+    return findChildByClass(TslPropertiesList.class);
   }
 
 }

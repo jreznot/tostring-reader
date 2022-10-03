@@ -42,28 +42,21 @@ objectId ::= IDENTIFIER {
     extends = value
 }
 
-objectParenth ::= IDENTIFIER LPARENTH propertiesListParenth RPARENTH {
+propertiesList ::= keyValue*
+
+keyValue ::= key ASSIGN value (COMMA|&(RPARENTH|RBRACE)) {
+    pin = 2
+    recoverWhile = notRBraceParenthOrNextValue
+}
+
+objectParenth ::= IDENTIFIER LPARENTH propertiesList RPARENTH {
     pin = 2
     extends = value
 }
 
-propertiesListParenth ::= keyValueParenth*
-
-keyValueParenth ::= key ASSIGN value (COMMA|&RPARENTH) {
-    pin = 2
-    recoverWhile = notRParenthOrNextValue
-}
-
-objectBrace ::= IDENTIFIER LBRACE propertiesListBrace RBRACE {
+objectBrace ::= IDENTIFIER LBRACE propertiesList RBRACE {
     pin = 2
     extends = value
-}
-
-propertiesListBrace ::= keyValueBrace*
-
-keyValueBrace ::= key ASSIGN value (COMMA|&RBRACE) {
-    pin = 2
-    recoverWhile = notRBraceOrNextValue
 }
 
 key ::= IDENTIFIER
@@ -95,5 +88,4 @@ nullLiteral ::= NULL {
 }
 
 private notBracketOrNextValue ::= !(RBRACKET|value)
-private notRParenthOrNextValue ::= !(RPARENTH|value)
-private notRBraceOrNextValue ::= !(RBRACE|value)
+private notRBraceParenthOrNextValue ::= !(RPARENTH|RBRACE|value)

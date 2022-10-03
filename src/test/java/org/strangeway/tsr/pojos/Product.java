@@ -3,11 +3,13 @@ package org.strangeway.tsr.pojos;
 import java.util.List;
 
 public final class Product {
+  private final ProductType productType;
   private final String name;
   private final Double price;
   private final int count;
 
-  public Product(String name, Double price, int count) {
+  public Product(ProductType productType, String name, Double price, int count) {
+    this.productType = productType;
     this.name = name;
     this.price = price;
     this.count = count;
@@ -25,17 +27,22 @@ public final class Product {
     return count;
   }
 
+  public ProductType getProductType() {
+    return productType;
+  }
+
   @Override
   public String toString() {
     return "Product{" +
-        "name='" + name + '\'' +
+        "productType=" + productType +
+        ", name='" + name + '\'' +
         ", price=" + price +
         ", count=" + count +
         '}';
   }
 
   public static void main(String[] args) {
-    Product p = new Product("Some", 10.0, 100);
+    Product p = new Product(ProductType.USED, "Some", 10.0, 100);
     System.out.println(List.of(p));
   }
 }

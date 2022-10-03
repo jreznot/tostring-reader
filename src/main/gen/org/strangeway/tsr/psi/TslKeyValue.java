@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface TslKeyValueBrace extends PsiElement {
+public interface TslKeyValue extends PsiElement {
 
   @NotNull
   TslKey getKey();
