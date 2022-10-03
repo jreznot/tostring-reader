@@ -32,5 +32,6 @@
         <annotator language="ToString" implementationClass="org.strangeway.tsr.TslAnnotator"/>
 
         <colorSettingsPage implementation="org.strangeway.tsr.TslColorSettingsPage"/>
+        <lang.formatter language="ToString" implementationClass="org.strangeway.tsr.TslFormattingModelBuilder"/>
     </extensions>
 </idea-plugin>

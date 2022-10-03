@@ -9,7 +9,6 @@ import org.strangeway.tsr.psi.impl.*;
 public interface TslTokenTypes {
 
   IElementType BOOLEAN_LITERAL = new TslElementType("BOOLEAN_LITERAL");
-  IElementType KEY_VALUE = new TslElementType("KEY_VALUE");
   IElementType LIST = new TslElementType("LIST");
   IElementType MAP = new TslElementType("MAP");
   IElementType MAP_ITEM = new TslElementType("MAP_ITEM");
@@ -23,6 +22,7 @@ public interface TslTokenTypes {
   IElementType OBJECT_REF = new TslElementType("OBJECT_REF");
   IElementType PROPERTIES_LIST = new TslElementType("PROPERTIES_LIST");
   IElementType PROPERTY_KEY = new TslElementType("PROPERTY_KEY");
+  IElementType PROPERTY_KEY_VALUE = new TslElementType("PROPERTY_KEY_VALUE");
   IElementType STRING_LITERAL = new TslElementType("STRING_LITERAL");
   IElementType VALUE = new TslElementType("VALUE");
 
@@ -50,9 +50,6 @@ public interface TslTokenTypes {
       IElementType type = node.getElementType();
       if (type == BOOLEAN_LITERAL) {
         return new TslBooleanLiteralImpl(node);
-      }
-      else if (type == KEY_VALUE) {
-        return new TslKeyValueImpl(node);
       }
       else if (type == LIST) {
         return new TslListImpl(node);
@@ -92,6 +89,9 @@ public interface TslTokenTypes {
       }
       else if (type == PROPERTY_KEY) {
         return new TslPropertyKeyImpl(node);
+      }
+      else if (type == PROPERTY_KEY_VALUE) {
+        return new TslPropertyKeyValueImpl(node);
       }
       else if (type == STRING_LITERAL) {
         return new TslStringLiteralImpl(node);

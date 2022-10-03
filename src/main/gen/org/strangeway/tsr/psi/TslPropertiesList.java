@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface TslPropertiesList extends PsiElement {
 
   @NotNull
-  List<TslKeyValue> getKeyValueList();
+  List<TslPropertyKeyValue> getPropertyKeyValueList();
 
 }

@@ -7,4 +7,12 @@ public final class TslTokenSets {
   }
 
   public static final TokenSet STRINGS = TokenSet.create(TslTokenTypes.DOUBLE_QUOTED_STRING, TslTokenTypes.SINGLE_QUOTED_STRING);
+  public static final TokenSet BRACES = TokenSet.create(
+      TslTokenTypes.LBRACE, TslTokenTypes.RBRACE,
+      TslTokenTypes.LBRACKET, TslTokenTypes.RBRACKET,
+      TslTokenTypes.LPARENTH, TslTokenTypes.RPARENTH
+  );
+  public static final TokenSet BLOCK_IDENTIFIERS = TokenSet.create(
+      TslTokenTypes.OBJECT_NAME
+  );
 }

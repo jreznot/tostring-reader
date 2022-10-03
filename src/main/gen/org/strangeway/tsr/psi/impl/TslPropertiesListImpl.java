@@ -29,8 +29,8 @@ public class TslPropertiesListImpl extends ASTWrapperPsiElement implements TslPr
 
   @Override
   @NotNull
-  public List<TslKeyValue> getKeyValueList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, TslKeyValue.class);
+  public List<TslPropertyKeyValue> getPropertyKeyValueList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, TslPropertyKeyValue.class);
   }
 
 }

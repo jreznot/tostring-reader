@@ -55,51 +55,6 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE))
-  public static boolean keyValue(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "keyValue")) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, KEY_VALUE, "<key value>");
-    r = propertyKey(b, l + 1);
-    r = r && consumeToken(b, ASSIGN);
-    p = r; // pin = 2
-    r = r && report_error_(b, value(b, l + 1));
-    r = p && keyValue_3(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, TslParser::notRBraceParenthOrNextValue);
-    return r || p;
-  }
-
-  // COMMA|&(RPARENTH|RBRACE)
-  private static boolean keyValue_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "keyValue_3")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    if (!r) r = keyValue_3_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // &(RPARENTH|RBRACE)
-  private static boolean keyValue_3_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "keyValue_3_1")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _AND_);
-    r = keyValue_3_1_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // RPARENTH|RBRACE
-  private static boolean keyValue_3_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "keyValue_3_1_0")) return false;
-    boolean r;
-    r = consumeToken(b, RPARENTH);
-    if (!r) r = consumeToken(b, RBRACE);
-    return r;
-  }
-
-  /* ********************************************************** */
   // LBRACKET listItem* RBRACKET
   public static boolean list(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "list")) return false;
@@ -391,13 +346,13 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // keyValue*
+  // propertyKeyValue*
   public static boolean propertiesList(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "propertiesList")) return false;
     Marker m = enter_section_(b, l, _NONE_, PROPERTIES_LIST, "<properties list>");
     while (true) {
       int c = current_position_(b);
-      if (!keyValue(b, l + 1)) break;
+      if (!propertyKeyValue(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "propertiesList", c)) break;
     }
     exit_section_(b, l, m, true, false, null);
@@ -413,6 +368,51 @@ public class TslParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = consumeToken(b, IDENTIFIER);
     exit_section_(b, m, PROPERTY_KEY, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE))
+  public static boolean propertyKeyValue(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "propertyKeyValue")) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, PROPERTY_KEY_VALUE, "<property key value>");
+    r = propertyKey(b, l + 1);
+    r = r && consumeToken(b, ASSIGN);
+    p = r; // pin = 2
+    r = r && report_error_(b, value(b, l + 1));
+    r = p && propertyKeyValue_3(b, l + 1) && r;
+    exit_section_(b, l, m, r, p, TslParser::notRBraceParenthOrNextValue);
+    return r || p;
+  }
+
+  // COMMA|&(RPARENTH|RBRACE)
+  private static boolean propertyKeyValue_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "propertyKeyValue_3")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    if (!r) r = propertyKeyValue_3_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // &(RPARENTH|RBRACE)
+  private static boolean propertyKeyValue_3_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "propertyKeyValue_3_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _AND_);
+    r = propertyKeyValue_3_1_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // RPARENTH|RBRACE
+  private static boolean propertyKeyValue_3_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "propertyKeyValue_3_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, RPARENTH);
+    if (!r) r = consumeToken(b, RBRACE);
     return r;
   }
 

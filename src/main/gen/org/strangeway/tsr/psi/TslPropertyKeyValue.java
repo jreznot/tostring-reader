@@ -5,7 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface TslKeyValue extends PsiElement {
+public interface TslPropertyKeyValue extends PsiElement {
 
   @NotNull
   TslPropertyKey getPropertyKey();

@@ -41,9 +41,9 @@ objectId ::= IDENTIFIER {
     extends = value
 }
 
-propertiesList ::= keyValue*
+propertiesList ::= propertyKeyValue*
 
-keyValue ::= propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE)) {
+propertyKeyValue ::= propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE)) {
     pin = 2
     recoverWhile = notRBraceParenthOrNextValue
 }
