@@ -21,5 +21,7 @@
         <lang.syntaxHighlighterFactory language="ToString" implementationClass="org.strangeway.tsr.TslSyntaxHighlighterFactory"/>
 
         <annotator language="ToString" implementationClass="org.strangeway.tsr.TslAnnotator"/>
+
+        <colorSettingsPage implementation="org.strangeway.tsr.TslColorSettingsPage"/>
     </extensions>
 </idea-plugin>

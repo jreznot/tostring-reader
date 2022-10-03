@@ -13,7 +13,7 @@ import java.util.Map;
 
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
-public final class TslSyntaxHighlighter extends SyntaxHighlighterBase {
+final class TslSyntaxHighlighter extends SyntaxHighlighterBase {
   public static final TextAttributesKey TSL_KEYWORD =
       createTextAttributesKey("TSL.KEYWORD", DefaultLanguageHighlighterColors.KEYWORD);
 
@@ -34,6 +34,9 @@ public final class TslSyntaxHighlighter extends SyntaxHighlighterBase {
 
   public static final TextAttributesKey TSL_BRACKETS =
       createTextAttributesKey("TSL.BRACKETS", DefaultLanguageHighlighterColors.BRACKETS);
+
+  public static final TextAttributesKey TSL_BRACES =
+      createTextAttributesKey("TSL.BRACES", DefaultLanguageHighlighterColors.BRACES);
 
   public static final TextAttributesKey TSL_COMMA =
       createTextAttributesKey("TSL.COMMA", DefaultLanguageHighlighterColors.COMMA);
@@ -58,6 +61,7 @@ public final class TslSyntaxHighlighter extends SyntaxHighlighterBase {
     fillMap(ourMap, TSL_STRING, TslTokenTypes.DOUBLE_QUOTED_STRING, TslTokenTypes.SINGLE_QUOTED_STRING);
 
     fillMap(ourMap, TSL_BRACKETS, TslTokenTypes.LBRACKET, TslTokenTypes.RBRACKET);
+    fillMap(ourMap, TSL_BRACES, TslTokenTypes.LBRACE, TslTokenTypes.RBRACE);
     fillMap(ourMap, TSL_PARENTHESES, TslTokenTypes.LPARENTH, TslTokenTypes.RPARENTH);
     fillMap(ourMap, TSL_COMMA, TslTokenTypes.COMMA);
     fillMap(ourMap, TSL_HASHCODE, TslTokenTypes.STRUDEL_HEX);

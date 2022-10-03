@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.strangeway.tsr.psi.TslTokenTypes;
 
-public final class TslPairedBraceMatcher implements PairedBraceMatcher {
+final class TslPairedBraceMatcher implements PairedBraceMatcher {
   public static final BracePair[] PAIRS = new BracePair[]{
       new BracePair(TslTokenTypes.LPARENTH, TslTokenTypes.RPARENTH, true),
       new BracePair(TslTokenTypes.LBRACKET, TslTokenTypes.RBRACKET, true),

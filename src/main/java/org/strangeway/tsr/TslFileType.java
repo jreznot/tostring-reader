@@ -1,6 +1,5 @@
 package org.strangeway.tsr;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.fileTypes.LanguageFileType;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
@@ -32,6 +31,6 @@ public final class TslFileType extends LanguageFileType {
 
   @Override
   public Icon getIcon() {
-    return AllIcons.Nodes.Gvariable;
+    return TslIcons.FILE_ICON;
   }
 }

@@ -12,7 +12,7 @@ import org.strangeway.tsr.psi.TslPropertyKey;
 import javax.management.ObjectName;
 import java.util.regex.Pattern;
 
-public final class TslAnnotator implements Annotator {
+final class TslAnnotator implements Annotator {
 
   private final Pattern ALL_UPPERCASE = Pattern.compile("[A-Z]+");
 
