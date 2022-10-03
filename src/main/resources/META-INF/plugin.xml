@@ -7,7 +7,7 @@
     <description><![CDATA[
     This is total absurd, but this plugin tries to simplify reading of toString() output for Java objects.
     <br/>
-    There is no such language called ToString, but we tried to implement parser and highlighter of common patterns used for toString() in Java:
+    There is no such language called ToString, so we tried to implement parser and highlighter of common patterns used for toString() in Java:
     <ul>
         <li>Object with braces: User{property='value'}</li>
         <li>Object with parentheses: User(property="value")</li>
@@ -16,6 +16,10 @@
         <li>References: { ref=com.Example@cafe90 }</li>
     </ul>
     <br/>
+    <b>When it is useful?</b>
+    <br/>
+    - We know at least one application of this: reading diffs produced by test asserts, such as assertEquals in JUnit.
+    <br/><br/>
     Follow author in Twitter: <a href="https://twitter.com/Yuriy_Artamonov">&#64;Yuriy Artamonov</a>
     ]]></description>
 
