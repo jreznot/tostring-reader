@@ -26,10 +26,10 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.strangeway.tsr.psi.TslMapKey;
 import org.strangeway.tsr.psi.TslObjectId;
+import org.strangeway.tsr.psi.TslObjectName;
 import org.strangeway.tsr.psi.TslPropertyKey;
 import org.strangeway.tsr.psi.TslPropertyKeyValue;
 
-import javax.management.ObjectName;
 import java.util.regex.Pattern;
 
 final class TslAnnotator implements Annotator {
@@ -53,7 +53,7 @@ final class TslAnnotator implements Annotator {
             .textAttributes(TslSyntaxHighlighter.TSL_FIELD_NAME)
             .create();
       }
-    } else if (element instanceof ObjectName) {
+    } else if (element instanceof TslObjectName) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .textAttributes(TslSyntaxHighlighter.TSL_CLASSNAME)
           .create();
