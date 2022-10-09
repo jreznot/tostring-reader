@@ -38,9 +38,8 @@ tasks {
 
         changeNotes.set("""
           <ul>
-            <li>Parsing and highlighting of toString() format</li>
-            <li>Auto formatting</li>
-            <li>Code folding</li>
+            <li>Parsing Java records toString() format</li>
+            <li>Fallback parsing of String values without quotes</li>
           </ul>
         """.trimIndent())
     }
