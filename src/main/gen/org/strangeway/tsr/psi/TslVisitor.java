@@ -11,6 +11,14 @@ public class TslVisitor extends PsiElementVisitor {
     visitValue(o);
   }
 
+  public void visitFallbackItem(@NotNull TslFallbackItem o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFallbackStringLiteral(@NotNull TslFallbackStringLiteral o) {
+    visitValue(o);
+  }
+
   public void visitList(@NotNull TslList o) {
     visitValue(o);
   }

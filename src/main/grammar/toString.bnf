@@ -44,6 +44,8 @@
     FALSE='false'
     NULL='null'
     ASSIGN='='
+    DOT='.'
+    DASH='-'
   ]
 }
 
@@ -51,7 +53,8 @@ root ::= value
 
 value ::= stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef |
     objectBrace | objectParenth | objectBracket |
-    objectId | list | map
+    fallbackStringLiteral |
+    objectId | list | map |
 
 objectRef ::= IDENTIFIER STRUDEL_HEX {
     pin = 2
@@ -64,9 +67,9 @@ objectId ::= IDENTIFIER {
 
 private propertiesList ::= propertyKeyValue*
 
-propertyKeyValue ::= propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE)) {
+propertyKeyValue ::= propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACKET|RBRACE)) {
     pin = 2
-    recoverWhile = notRBraceParenthOrNextValue
+    recoverWhile = notRCloseOrNextValue
 }
 
 fake object ::= objectName propertiesList? {
@@ -111,7 +114,7 @@ mapItem ::= mapKey ASSIGN value (COMMA|&RBRACE) {
     recoverWhile = notRBraceOrNextValue
 }
 
-mapKey ::= nullLiteral | booleanLiteral | numberLiteral | objectRef | objectId
+mapKey ::= nullLiteral | booleanLiteral | numberLiteral | objectRef | fallbackStringLiteral | objectId
 
 booleanLiteral ::= TRUE | FALSE {
     extends = value
@@ -125,10 +128,17 @@ stringLiteral ::= DOUBLE_QUOTED_STRING | SINGLE_QUOTED_STRING {
     extends = value
 }
 
+fallbackStringLiteral ::= fallbackItem fallbackItem+ {
+    pin = 2
+    extends = value
+}
+
+fallbackItem ::= IDENTIFIER | INTEGER_NUMBER | DOUBLE_NUMBER | TRUE | FALSE | NULL | DOT | DASH
+
 nullLiteral ::= NULL {
     extends = value
 }
 
 private notRBracketOrNextValue ::= !(RBRACKET|value)
 private notRBraceOrNextValue ::= !(RBRACE|value)
-private notRBraceParenthOrNextValue ::= !(RPARENTH|RBRACE|value)
+private notRCloseOrNextValue ::= !(RPARENTH|RBRACE|RBRACKET|value)

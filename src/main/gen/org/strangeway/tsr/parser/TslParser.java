@@ -36,9 +36,9 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   public static final TokenSet[] EXTENDS_SETS_ = new TokenSet[] {
-    create_token_set_(BOOLEAN_LITERAL, LIST, NULL_LITERAL, NUMBER_LITERAL,
-      OBJECT_BRACE, OBJECT_BRACKET, OBJECT_ID, OBJECT_PARENTH,
-      OBJECT_REF, STRING_LITERAL, VALUE),
+    create_token_set_(BOOLEAN_LITERAL, FALLBACK_STRING_LITERAL, LIST, NULL_LITERAL,
+      NUMBER_LITERAL, OBJECT_BRACE, OBJECT_BRACKET, OBJECT_ID,
+      OBJECT_PARENTH, OBJECT_REF, STRING_LITERAL, VALUE),
   };
 
   /* ********************************************************** */
@@ -51,6 +51,51 @@ public class TslParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
     exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER | INTEGER_NUMBER | DOUBLE_NUMBER | TRUE | FALSE | NULL | DOT | DASH
+  public static boolean fallbackItem(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fallbackItem")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, FALLBACK_ITEM, "<fallback item>");
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, INTEGER_NUMBER);
+    if (!r) r = consumeToken(b, DOUBLE_NUMBER);
+    if (!r) r = consumeToken(b, TRUE);
+    if (!r) r = consumeToken(b, FALSE);
+    if (!r) r = consumeToken(b, NULL);
+    if (!r) r = consumeToken(b, DOT);
+    if (!r) r = consumeToken(b, DASH);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // fallbackItem fallbackItem+
+  public static boolean fallbackStringLiteral(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fallbackStringLiteral")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, FALLBACK_STRING_LITERAL, "<fallback string literal>");
+    r = fallbackItem(b, l + 1);
+    r = r && fallbackStringLiteral_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // fallbackItem+
+  private static boolean fallbackStringLiteral_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fallbackStringLiteral_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = fallbackItem(b, l + 1);
+    while (r) {
+      int c = current_position_(b);
+      if (!fallbackItem(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "fallbackStringLiteral_1", c)) break;
+    }
+    exit_section_(b, m, null, r);
     return r;
   }
 
@@ -177,7 +222,7 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // nullLiteral | booleanLiteral | numberLiteral | objectRef | objectId
+  // nullLiteral | booleanLiteral | numberLiteral | objectRef | fallbackStringLiteral | objectId
   public static boolean mapKey(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "mapKey")) return false;
     boolean r;
@@ -186,6 +231,7 @@ public class TslParser implements PsiParser, LightPsiParser {
     if (!r) r = booleanLiteral(b, l + 1);
     if (!r) r = numberLiteral(b, l + 1);
     if (!r) r = objectRef(b, l + 1);
+    if (!r) r = fallbackStringLiteral(b, l + 1);
     if (!r) r = objectId(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -212,27 +258,6 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // !(RPARENTH|RBRACE|value)
-  static boolean notRBraceParenthOrNextValue(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "notRBraceParenthOrNextValue")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !notRBraceParenthOrNextValue_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // RPARENTH|RBRACE|value
-  private static boolean notRBraceParenthOrNextValue_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "notRBraceParenthOrNextValue_0")) return false;
-    boolean r;
-    r = consumeToken(b, RPARENTH);
-    if (!r) r = consumeToken(b, RBRACE);
-    if (!r) r = value(b, l + 1);
-    return r;
-  }
-
-  /* ********************************************************** */
   // !(RBRACKET|value)
   static boolean notRBracketOrNextValue(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "notRBracketOrNextValue")) return false;
@@ -248,6 +273,28 @@ public class TslParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "notRBracketOrNextValue_0")) return false;
     boolean r;
     r = consumeToken(b, RBRACKET);
+    if (!r) r = value(b, l + 1);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !(RPARENTH|RBRACE|RBRACKET|value)
+  static boolean notRCloseOrNextValue(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "notRCloseOrNextValue")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !notRCloseOrNextValue_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // RPARENTH|RBRACE|RBRACKET|value
+  private static boolean notRCloseOrNextValue_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "notRCloseOrNextValue_0")) return false;
+    boolean r;
+    r = consumeToken(b, RPARENTH);
+    if (!r) r = consumeToken(b, RBRACE);
+    if (!r) r = consumeToken(b, RBRACKET);
     if (!r) r = value(b, l + 1);
     return r;
   }
@@ -386,7 +433,7 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACE))
+  // propertyKey ASSIGN value (COMMA|&(RPARENTH|RBRACKET|RBRACE))
   public static boolean propertyKeyValue(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "propertyKeyValue")) return false;
     boolean r, p;
@@ -396,11 +443,11 @@ public class TslParser implements PsiParser, LightPsiParser {
     p = r; // pin = 2
     r = r && report_error_(b, value(b, l + 1));
     r = p && propertyKeyValue_3(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, TslParser::notRBraceParenthOrNextValue);
+    exit_section_(b, l, m, r, p, TslParser::notRCloseOrNextValue);
     return r || p;
   }
 
-  // COMMA|&(RPARENTH|RBRACE)
+  // COMMA|&(RPARENTH|RBRACKET|RBRACE)
   private static boolean propertyKeyValue_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "propertyKeyValue_3")) return false;
     boolean r;
@@ -411,7 +458,7 @@ public class TslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // &(RPARENTH|RBRACE)
+  // &(RPARENTH|RBRACKET|RBRACE)
   private static boolean propertyKeyValue_3_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "propertyKeyValue_3_1")) return false;
     boolean r;
@@ -421,11 +468,12 @@ public class TslParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // RPARENTH|RBRACE
+  // RPARENTH|RBRACKET|RBRACE
   private static boolean propertyKeyValue_3_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "propertyKeyValue_3_1_0")) return false;
     boolean r;
     r = consumeToken(b, RPARENTH);
+    if (!r) r = consumeToken(b, RBRACKET);
     if (!r) r = consumeToken(b, RBRACE);
     return r;
   }
@@ -452,7 +500,8 @@ public class TslParser implements PsiParser, LightPsiParser {
   /* ********************************************************** */
   // stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef |
   //     objectBrace | objectParenth | objectBracket |
-  //     objectId | list | map
+  //     fallbackStringLiteral |
+  //     objectId | list | map |
   public static boolean value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "value")) return false;
     boolean r;
@@ -465,9 +514,11 @@ public class TslParser implements PsiParser, LightPsiParser {
     if (!r) r = objectBrace(b, l + 1);
     if (!r) r = objectParenth(b, l + 1);
     if (!r) r = objectBracket(b, l + 1);
+    if (!r) r = fallbackStringLiteral(b, l + 1);
     if (!r) r = objectId(b, l + 1);
     if (!r) r = list(b, l + 1);
     if (!r) r = map(b, l + 1);
+    if (!r) r = consumeToken(b, VALUE_12_0);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

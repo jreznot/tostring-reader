@@ -24,11 +24,7 @@ import com.intellij.lang.annotation.Annotator;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
-import org.strangeway.tsr.psi.TslMapKey;
-import org.strangeway.tsr.psi.TslObjectId;
-import org.strangeway.tsr.psi.TslObjectName;
-import org.strangeway.tsr.psi.TslPropertyKey;
-import org.strangeway.tsr.psi.TslPropertyKeyValue;
+import org.strangeway.tsr.psi.*;
 
 import java.util.regex.Pattern;
 
@@ -56,6 +52,10 @@ final class TslAnnotator implements Annotator {
     } else if (element instanceof TslObjectName) {
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
           .textAttributes(TslSyntaxHighlighter.TSL_CLASSNAME)
+          .create();
+    } else if (element instanceof TslFallbackStringLiteral) {
+      holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+          .textAttributes(TslSyntaxHighlighter.TSL_STRING)
           .create();
     }
   }

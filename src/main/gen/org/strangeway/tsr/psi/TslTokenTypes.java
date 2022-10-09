@@ -9,6 +9,8 @@ import org.strangeway.tsr.psi.impl.*;
 public interface TslTokenTypes {
 
   IElementType BOOLEAN_LITERAL = new TslElementType("BOOLEAN_LITERAL");
+  IElementType FALLBACK_ITEM = new TslElementType("FALLBACK_ITEM");
+  IElementType FALLBACK_STRING_LITERAL = new TslElementType("FALLBACK_STRING_LITERAL");
   IElementType LIST = new TslElementType("LIST");
   IElementType MAP = new TslElementType("MAP");
   IElementType MAP_ITEM = new TslElementType("MAP_ITEM");
@@ -29,6 +31,8 @@ public interface TslTokenTypes {
   IElementType ASSIGN = new TslTokenType("=");
   IElementType COLON = new TslTokenType(":");
   IElementType COMMA = new TslTokenType(",");
+  IElementType DASH = new TslTokenType("-");
+  IElementType DOT = new TslTokenType(".");
   IElementType DOUBLE_NUMBER = new TslTokenType("DOUBLE_NUMBER");
   IElementType DOUBLE_QUOTED_STRING = new TslTokenType("DOUBLE_QUOTED_STRING");
   IElementType FALSE = new TslTokenType("false");
@@ -44,12 +48,19 @@ public interface TslTokenTypes {
   IElementType SINGLE_QUOTED_STRING = new TslTokenType("SINGLE_QUOTED_STRING");
   IElementType STRUDEL_HEX = new TslTokenType("STRUDEL_HEX");
   IElementType TRUE = new TslTokenType("true");
+  IElementType VALUE_12_0 = new TslTokenType("value_12_0");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
       if (type == BOOLEAN_LITERAL) {
         return new TslBooleanLiteralImpl(node);
+      }
+      else if (type == FALLBACK_ITEM) {
+        return new TslFallbackItemImpl(node);
+      }
+      else if (type == FALLBACK_STRING_LITERAL) {
+        return new TslFallbackStringLiteralImpl(node);
       }
       else if (type == LIST) {
         return new TslListImpl(node);

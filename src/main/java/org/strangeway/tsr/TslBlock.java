@@ -187,6 +187,7 @@ final class TslBlock implements ASTBlock {
     return node instanceof TslObjectName
         || node instanceof TslObjectId
         || node instanceof TslObjectRef
+        || node instanceof TslFallbackStringLiteral
         || node.getFirstChildNode() == null;
   }
 }

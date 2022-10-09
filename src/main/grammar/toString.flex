@@ -81,6 +81,9 @@ STRUDEL_HEX=[@][a-f0-9]+
     {DOUBLE_QUOTED_STRING}               { return DOUBLE_QUOTED_STRING; }
     {SINGLE_QUOTED_STRING}               { return SINGLE_QUOTED_STRING; }
     {WHITE_SPACE}                        { return WHITE_SPACE; }
+
+    "."                                  { return DOT; }
+    "-"                                  { return DASH; }
 }
 
 [^] { return BAD_CHARACTER; }
