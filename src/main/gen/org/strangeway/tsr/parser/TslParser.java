@@ -56,10 +56,9 @@ public class TslParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // IDENTIFIER | INTEGER_NUMBER | DOUBLE_NUMBER | TRUE | FALSE | NULL | DOT | DASH
-  public static boolean fallbackItem(PsiBuilder b, int l) {
+  static boolean fallbackItem(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "fallbackItem")) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, FALLBACK_ITEM, "<fallback item>");
     r = consumeToken(b, IDENTIFIER);
     if (!r) r = consumeToken(b, INTEGER_NUMBER);
     if (!r) r = consumeToken(b, DOUBLE_NUMBER);
@@ -68,7 +67,6 @@ public class TslParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, NULL);
     if (!r) r = consumeToken(b, DOT);
     if (!r) r = consumeToken(b, DASH);
-    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

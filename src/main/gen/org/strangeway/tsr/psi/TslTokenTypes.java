@@ -9,7 +9,6 @@ import org.strangeway.tsr.psi.impl.*;
 public interface TslTokenTypes {
 
   IElementType BOOLEAN_LITERAL = new TslElementType("BOOLEAN_LITERAL");
-  IElementType FALLBACK_ITEM = new TslElementType("FALLBACK_ITEM");
   IElementType FALLBACK_STRING_LITERAL = new TslElementType("FALLBACK_STRING_LITERAL");
   IElementType LIST = new TslElementType("LIST");
   IElementType MAP = new TslElementType("MAP");
@@ -55,9 +54,6 @@ public interface TslTokenTypes {
       IElementType type = node.getElementType();
       if (type == BOOLEAN_LITERAL) {
         return new TslBooleanLiteralImpl(node);
-      }
-      else if (type == FALLBACK_ITEM) {
-        return new TslFallbackItemImpl(node);
       }
       else if (type == FALLBACK_STRING_LITERAL) {
         return new TslFallbackStringLiteralImpl(node);

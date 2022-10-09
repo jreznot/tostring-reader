@@ -133,7 +133,7 @@ fallbackStringLiteral ::= fallbackItem fallbackItem+ {
     extends = value
 }
 
-fallbackItem ::= IDENTIFIER | INTEGER_NUMBER | DOUBLE_NUMBER | TRUE | FALSE | NULL | DOT | DASH
+private fallbackItem ::= IDENTIFIER | INTEGER_NUMBER | DOUBLE_NUMBER | TRUE | FALSE | NULL | DOT | DASH
 
 nullLiteral ::= NULL {
     extends = value

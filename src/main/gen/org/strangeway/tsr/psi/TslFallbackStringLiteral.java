@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface TslFallbackStringLiteral extends TslValue {
 
-  @NotNull
-  List<TslFallbackItem> getFallbackItemList();
-
 }

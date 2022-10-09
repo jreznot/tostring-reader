@@ -27,10 +27,4 @@ public class TslFallbackStringLiteralImpl extends TslValueImpl implements TslFal
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public List<TslFallbackItem> getFallbackItemList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, TslFallbackItem.class);
-  }
-
 }
