@@ -14,6 +14,10 @@ java.sourceSets["main"].java {
     srcDir("src/main/gen")
 }
 
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+}
+
 intellij {
     version.set("2022.1.4")
     type.set("IC") // Target IDE Platform
