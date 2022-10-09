@@ -16,6 +16,7 @@ public interface TslTokenTypes {
   IElementType NULL_LITERAL = new TslElementType("NULL_LITERAL");
   IElementType NUMBER_LITERAL = new TslElementType("NUMBER_LITERAL");
   IElementType OBJECT_BRACE = new TslElementType("OBJECT_BRACE");
+  IElementType OBJECT_BRACKET = new TslElementType("OBJECT_BRACKET");
   IElementType OBJECT_ID = new TslElementType("OBJECT_ID");
   IElementType OBJECT_NAME = new TslElementType("OBJECT_NAME");
   IElementType OBJECT_PARENTH = new TslElementType("OBJECT_PARENTH");
@@ -70,6 +71,9 @@ public interface TslTokenTypes {
       }
       else if (type == OBJECT_BRACE) {
         return new TslObjectBraceImpl(node);
+      }
+      else if (type == OBJECT_BRACKET) {
+        return new TslObjectBracketImpl(node);
       }
       else if (type == OBJECT_ID) {
         return new TslObjectIdImpl(node);

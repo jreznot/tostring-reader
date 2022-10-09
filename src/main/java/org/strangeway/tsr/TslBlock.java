@@ -157,6 +157,7 @@ final class TslBlock implements ASTBlock {
     return node.getElementType() == TslTokenTypes.LIST
         || node.getElementType() == TslTokenTypes.MAP
         || node.getElementType() == TslTokenTypes.OBJECT_BRACE
+        || node.getElementType() == TslTokenTypes.OBJECT_BRACKET
         || node.getElementType() == TslTokenTypes.OBJECT_PARENTH;
   }
 
@@ -174,6 +175,9 @@ final class TslBlock implements ASTBlock {
     }
     if (node.getElementType() == TslTokenTypes.OBJECT_BRACE) {
       return lastChildNode != null && lastChildNode.getElementType() != TslTokenTypes.RBRACE;
+    }
+    if (node.getElementType() == TslTokenTypes.OBJECT_BRACKET) {
+      return lastChildNode != null && lastChildNode.getElementType() != TslTokenTypes.RBRACKET;
     }
     return false;
   }

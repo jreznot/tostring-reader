@@ -68,11 +68,14 @@ final class TslFoldingBuilder extends CustomFoldingBuilder implements DumbAware 
   @Override
   protected String getLanguagePlaceholderText(@NotNull ASTNode node, @NotNull TextRange range) {
     IElementType elementType = node.getElementType();
-    if (isBracesFoldingParent(elementType)) {
-      if (elementType == TslTokenTypes.LIST) {
-        return "[...]";
-      }
+    if (elementType == TslTokenTypes.LIST) {
+      return "[...]";
+    }
+    if (elementType == TslTokenTypes.MAP) {
       return "{...}";
+    }
+    if (isBracesFoldingParent(elementType)) {
+      return "(...)";
     }
 
     return null;
@@ -81,6 +84,7 @@ final class TslFoldingBuilder extends CustomFoldingBuilder implements DumbAware 
   private static boolean isBracesFoldingParent(IElementType elementType) {
     return elementType == TslTokenTypes.OBJECT_BRACE
         || elementType == TslTokenTypes.OBJECT_PARENTH
+        || elementType == TslTokenTypes.OBJECT_BRACKET
         || elementType == TslTokenTypes.LIST
         || elementType == TslTokenTypes.MAP;
   }
