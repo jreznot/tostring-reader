@@ -39,20 +39,13 @@ import static org.strangeway.tsr.psi.TslTokenTypes.*;
 %type IElementType
 %unicode
 
-IDENTIFIER=([:letter:]|[_])([:letter:]|[._\-0-9\$])*
+IDENTIFIER=([:letter:]|[_])([:letter:]|[._0-9\$])*
 
 ESCAPE_SEQUENCE=\\[^\r\n]
 DOUBLE_QUOTED_STRING=\"([^\\\"\r\n]|{ESCAPE_SEQUENCE})*(\"|\\)?
 SINGLE_QUOTED_STRING=\'([^\\\'\r\n]|{ESCAPE_SEQUENCE})*(\'|\\)?
 
-INTEGER_LITERAL=0|[1-9][0-9]*
-
-DIGIT=[0-9]
-DOUBLE_LITERAL=(({FLOATING_POINT_LITERAL1})|({FLOATING_POINT_LITERAL2})|({FLOATING_POINT_LITERAL3}))
-FLOATING_POINT_LITERAL1=({DIGIT})+"."({DIGIT})*({EXPONENT_PART})?
-FLOATING_POINT_LITERAL2="."({DIGIT})+({EXPONENT_PART})?
-FLOATING_POINT_LITERAL3=({DIGIT})+({EXPONENT_PART})
-EXPONENT_PART=[Ee]["+""-"]?({DIGIT})*
+NUMBER=(-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]*)?)|Infinity|-Infinity|NaN
 
 WHITE_SPACE=\s+
 
@@ -74,12 +67,11 @@ STRUDEL_HEX=[@][a-f0-9]+
     "}"                                  { return RBRACE; }
     "="                                  { return ASSIGN; }
 
-    {STRUDEL_HEX}                        { return STRUDEL_HEX; }
-    {IDENTIFIER}                         { return IDENTIFIER; }
-    {INTEGER_LITERAL}                    { return INTEGER_NUMBER; }
-    {DOUBLE_LITERAL}                     { return DOUBLE_NUMBER; }
+    {NUMBER}                             { return NUMBER; }
     {DOUBLE_QUOTED_STRING}               { return DOUBLE_QUOTED_STRING; }
     {SINGLE_QUOTED_STRING}               { return SINGLE_QUOTED_STRING; }
+    {STRUDEL_HEX}                        { return STRUDEL_HEX; }
+    {IDENTIFIER}                         { return IDENTIFIER; }
     {WHITE_SPACE}                        { return WHITE_SPACE; }
 
     "."                                  { return DOT; }

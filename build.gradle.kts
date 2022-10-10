@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.tsr"
-version = "1.0.3"
+version = "1.0.4"
 
 repositories {
     mavenCentral()
@@ -38,8 +38,7 @@ tasks {
 
         changeNotes.set("""
           <ul>
-            <li>Parsing Java records toString() format</li>
-            <li>Fallback parsing of String values without quotes</li>
+            <li>Fixed negative numbers parsing</li>
           </ul>
         """.trimIndent())
     }

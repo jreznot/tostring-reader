@@ -76,7 +76,7 @@ final class TslSyntaxHighlighter extends SyntaxHighlighterBase {
 
     fillMap(ourMap, TSL_KEYWORD, TslTokenTypes.NULL);
     fillMap(ourMap, TSL_BOOLEAN, TslTokenTypes.TRUE, TslTokenTypes.FALSE);
-    fillMap(ourMap, TSL_NUMBER, TslTokenTypes.INTEGER_NUMBER, TslTokenTypes.DOUBLE_NUMBER);
+    fillMap(ourMap, TSL_NUMBER, TslTokenTypes.NUMBER);
     fillMap(ourMap, TSL_STRING, TslTokenTypes.DOUBLE_QUOTED_STRING, TslTokenTypes.SINGLE_QUOTED_STRING);
 
     fillMap(ourMap, TSL_BRACKETS, TslTokenTypes.LBRACKET, TslTokenTypes.RBRACKET);

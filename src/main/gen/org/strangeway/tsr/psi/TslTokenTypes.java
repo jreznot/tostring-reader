@@ -32,15 +32,14 @@ public interface TslTokenTypes {
   IElementType COMMA = new TslTokenType(",");
   IElementType DASH = new TslTokenType("-");
   IElementType DOT = new TslTokenType(".");
-  IElementType DOUBLE_NUMBER = new TslTokenType("DOUBLE_NUMBER");
   IElementType DOUBLE_QUOTED_STRING = new TslTokenType("DOUBLE_QUOTED_STRING");
   IElementType FALSE = new TslTokenType("false");
   IElementType IDENTIFIER = new TslTokenType("IDENTIFIER");
-  IElementType INTEGER_NUMBER = new TslTokenType("INTEGER_NUMBER");
   IElementType LBRACE = new TslTokenType("{");
   IElementType LBRACKET = new TslTokenType("[");
   IElementType LPARENTH = new TslTokenType("(");
   IElementType NULL = new TslTokenType("null");
+  IElementType NUMBER = new TslTokenType("NUMBER");
   IElementType RBRACE = new TslTokenType("}");
   IElementType RBRACKET = new TslTokenType("]");
   IElementType RPARENTH = new TslTokenType(")");

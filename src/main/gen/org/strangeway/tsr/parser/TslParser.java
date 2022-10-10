@@ -55,13 +55,12 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER | INTEGER_NUMBER | DOUBLE_NUMBER | TRUE | FALSE | NULL | DOT | DASH
+  // IDENTIFIER | NUMBER | TRUE | FALSE | NULL | DOT | DASH
   static boolean fallbackItem(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "fallbackItem")) return false;
     boolean r;
     r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, INTEGER_NUMBER);
-    if (!r) r = consumeToken(b, DOUBLE_NUMBER);
+    if (!r) r = consumeToken(b, NUMBER);
     if (!r) r = consumeToken(b, TRUE);
     if (!r) r = consumeToken(b, FALSE);
     if (!r) r = consumeToken(b, NULL);
@@ -310,15 +309,14 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // DOUBLE_NUMBER | INTEGER_NUMBER
+  // NUMBER
   public static boolean numberLiteral(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "numberLiteral")) return false;
-    if (!nextTokenIs(b, "<number literal>", DOUBLE_NUMBER, INTEGER_NUMBER)) return false;
+    if (!nextTokenIs(b, NUMBER)) return false;
     boolean r;
-    Marker m = enter_section_(b, l, _NONE_, NUMBER_LITERAL, "<number literal>");
-    r = consumeToken(b, DOUBLE_NUMBER);
-    if (!r) r = consumeToken(b, INTEGER_NUMBER);
-    exit_section_(b, l, m, r, false, null);
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NUMBER);
+    exit_section_(b, m, NUMBER_LITERAL, r);
     return r;
   }
 
