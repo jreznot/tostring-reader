@@ -39,7 +39,7 @@ import static org.strangeway.tsr.psi.TslTokenTypes.*;
 %type IElementType
 %unicode
 
-IDENTIFIER=([:letter:]|[_])([:letter:]|[._0-9\$])*
+IDENTIFIER=([:jletter:]|[_])([:jletter:]|[._0-9\$])*
 
 ESCAPE_SEQUENCE=\\[^\r\n]
 DOUBLE_QUOTED_STRING=\"([^\\\"\r\n]|{ESCAPE_SEQUENCE})*(\"|\\)?
@@ -76,6 +76,13 @@ STRUDEL_HEX=[@][a-f0-9]+
 
     "."                                  { return DOT; }
     "-"                                  { return DASH; }
+    "+"                                  { return PLUS; }
+    "*"                                  { return STAR; }
+    "#"                                  { return SHARP; }
+    ";"                                  { return SEMICOLON; }
+    "%"                                  { return PERCENT; }
+    "/"                                  { return SLASH; }
+    "\\"                                 { return BACKSLASH; }
 }
 
 [^] { return BAD_CHARACTER; }

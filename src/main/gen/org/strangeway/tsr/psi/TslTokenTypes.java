@@ -28,9 +28,11 @@ public interface TslTokenTypes {
   IElementType VALUE = new TslElementType("VALUE");
 
   IElementType ASSIGN = new TslTokenType("=");
+  IElementType BACKSLASH = new TslTokenType("\\");
   IElementType COLON = new TslTokenType(":");
   IElementType COMMA = new TslTokenType(",");
   IElementType DASH = new TslTokenType("-");
+  IElementType DOLLAR = new TslTokenType("$");
   IElementType DOT = new TslTokenType(".");
   IElementType DOUBLE_QUOTED_STRING = new TslTokenType("DOUBLE_QUOTED_STRING");
   IElementType FALSE = new TslTokenType("false");
@@ -40,10 +42,16 @@ public interface TslTokenTypes {
   IElementType LPARENTH = new TslTokenType("(");
   IElementType NULL = new TslTokenType("null");
   IElementType NUMBER = new TslTokenType("NUMBER");
+  IElementType PERCENT = new TslTokenType("%");
+  IElementType PLUS = new TslTokenType("+");
   IElementType RBRACE = new TslTokenType("}");
   IElementType RBRACKET = new TslTokenType("]");
   IElementType RPARENTH = new TslTokenType(")");
+  IElementType SEMICOLON = new TslTokenType(";");
+  IElementType SHARP = new TslTokenType("#");
   IElementType SINGLE_QUOTED_STRING = new TslTokenType("SINGLE_QUOTED_STRING");
+  IElementType SLASH = new TslTokenType("/");
+  IElementType STAR = new TslTokenType("*");
   IElementType STRUDEL_HEX = new TslTokenType("STRUDEL_HEX");
   IElementType TRUE = new TslTokenType("true");
   IElementType VALUE_12_0 = new TslTokenType("value_12_0");

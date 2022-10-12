@@ -55,7 +55,7 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER | NUMBER | TRUE | FALSE | NULL | DOT | DASH
+  // IDENTIFIER | NUMBER | TRUE | FALSE | NULL | DOT | DASH | PLUS | STAR | SHARP | SEMICOLON | PERCENT | SLASH | BACKSLASH
   static boolean fallbackItem(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "fallbackItem")) return false;
     boolean r;
@@ -66,6 +66,13 @@ public class TslParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, NULL);
     if (!r) r = consumeToken(b, DOT);
     if (!r) r = consumeToken(b, DASH);
+    if (!r) r = consumeToken(b, PLUS);
+    if (!r) r = consumeToken(b, STAR);
+    if (!r) r = consumeToken(b, SHARP);
+    if (!r) r = consumeToken(b, SEMICOLON);
+    if (!r) r = consumeToken(b, PERCENT);
+    if (!r) r = consumeToken(b, SLASH);
+    if (!r) r = consumeToken(b, BACKSLASH);
     return r;
   }
 
@@ -494,15 +501,16 @@ public class TslParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef |
+  // fallbackStringLiteral |
+  //     stringLiteral | numberLiteral | booleanLiteral | nullLiteral | objectRef |
   //     objectBrace | objectParenth | objectBracket |
-  //     fallbackStringLiteral |
   //     objectId | list | map |
   public static boolean value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "value")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _COLLAPSE_, VALUE, "<value>");
-    r = stringLiteral(b, l + 1);
+    r = fallbackStringLiteral(b, l + 1);
+    if (!r) r = stringLiteral(b, l + 1);
     if (!r) r = numberLiteral(b, l + 1);
     if (!r) r = booleanLiteral(b, l + 1);
     if (!r) r = nullLiteral(b, l + 1);
@@ -510,7 +518,6 @@ public class TslParser implements PsiParser, LightPsiParser {
     if (!r) r = objectBrace(b, l + 1);
     if (!r) r = objectParenth(b, l + 1);
     if (!r) r = objectBracket(b, l + 1);
-    if (!r) r = fallbackStringLiteral(b, l + 1);
     if (!r) r = objectId(b, l + 1);
     if (!r) r = list(b, l + 1);
     if (!r) r = map(b, l + 1);
