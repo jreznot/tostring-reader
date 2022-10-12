@@ -38,7 +38,7 @@ tasks {
 
         changeNotes.set("""
           <ul>
-            <li>Fixed negative numbers parsing</li>
+            <li>Parse % as a part of String value</li>
           </ul>
         """.trimIndent())
     }
