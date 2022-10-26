@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.strangeway.tsr"
-version = "1.0.5"
+version = "1.0.6"
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ tasks.withType<JavaCompile> {
 }
 
 intellij {
-    version.set("2022.1.4")
+    version.set("2021.3.3")
     type.set("IC") // Target IDE Platform
 
     plugins.set(listOf())
@@ -33,12 +33,12 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("221")
+        sinceBuild.set("213")
         untilBuild.set("231.*")
 
         changeNotes.set("""
           <ul>
-            <li>Parse % as a part of String value</li>
+            <li>Support Android Studio</li>
           </ul>
         """.trimIndent())
     }
