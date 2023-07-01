@@ -1,10 +1,10 @@
 plugins {
     id("java")
-    id("org.jetbrains.intellij") version "1.9.0"
+    id("org.jetbrains.intellij") version "1.14.2"
 }
 
 group = "org.strangeway.tsr"
-version = "1.0.6"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -19,7 +19,7 @@ tasks.withType<JavaCompile> {
 }
 
 intellij {
-    version.set("2021.3.3")
+    version.set("2023.1.3")
     type.set("IC") // Target IDE Platform
 
     plugins.set(listOf())
@@ -28,17 +28,17 @@ intellij {
 tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
     }
 
     patchPluginXml {
-        sinceBuild.set("213")
-        untilBuild.set("231.*")
+        sinceBuild.set("231")
+        untilBuild.set("241.*")
 
         changeNotes.set("""
           <ul>
-            <li>Support Android Studio</li>
+            <li>Support IntelliJ IDEA 2023.1</li>
           </ul>
         """.trimIndent())
     }
